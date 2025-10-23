@@ -16,6 +16,8 @@ canvas{display:block;margin:0 auto;background:linear-gradient(180deg,#001022 0%,
 .highlist{min-width:220px;text-align:left;color:var(--accent)}
 .highscore-form{margin-top:12px;display:flex;gap:8px;justify-content:center;align-items:center}
 #playerName{padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.2);color:var(--fg)}
+.pause{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font-weight:800;color:var(--accent);display:none}
+.container{position:relative}
 .message{margin-top:10px;color:var(--accent);font-weight:700}
 
 /* small HUD on canvas for arrows */

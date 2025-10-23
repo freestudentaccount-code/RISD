@@ -30,6 +30,8 @@ let alienDir = 1; // 1 right, -1 left
 let alienStepDown = 18;
 let levelTimeout = null; // guard for scheduled level transition
 let transitioning = false; // fallback for older cached code paths (harmless)
+let paused = false; // pause state when user presses Enter
+let stepCount = 0; // number of times aliens have stepped down this level
 // load sounds (files added to repo)
 const soundPew = new Audio('pew.wav');
 const soundGameOver = new Audio('gameover.wav');
@@ -37,7 +39,11 @@ const soundNextLevel = new Audio('nextlevel.wav');
 // high score storage
 const HS_KEY = 'emoji-inv-highlist-v1';
 function loadHighList(){
-  try{ return JSON.parse(localStorage.getItem(HS_KEY) || '[]'); }catch(e){return []}
+  try{
+    const raw = JSON.parse(localStorage.getItem(HS_KEY) || '[]');
+    // coerce score to number and ensure shape
+    return (raw||[]).map(x=>({ name: x.name||'Player', score: Number(x.score)||0 })).sort((a,b)=>b.score-a.score);
+  }catch(e){return []}
 }
 function saveHighList(list){ localStorage.setItem(HS_KEY, JSON.stringify(list.slice(0,10))); }
 function renderHighList(){
@@ -179,6 +185,8 @@ function roundRect(ctx, x, y, w, h, r, fill, stroke){
 }
 
 function update(dt){
+  if(paused) return; // skip updates when paused
+
   // ship movement
   if(keys['ArrowLeft']) ship.x -= ship.speed;
   if(keys['ArrowRight']) ship.x += ship.speed;
@@ -193,8 +201,11 @@ function update(dt){
   const timeLeft = Math.max(0, levelTime - elapsed);
   const tFrac = 1 - timeLeft / levelTime; // 0..1
   // make aliens speed up as the level timer counts down (stronger acceleration near end)
-  const alienSpeedBase = 22 + level*7; // slightly higher base than original and scales with level
-  const alienSpeed = alienSpeedBase + Math.pow(tFrac,1.6)*120; // additive acceleration based on remaining time
+  // per-level base speed increase
+  const alienSpeedBase = 22 + level * 8 + stepCount * 6; // stepCount increases speed each time aliens step down
+  // scale acceleration with level and with how many times they've stepped down this level
+  const accelScale = (80 + level * 10) + stepCount * 20;
+  const alienSpeed = alienSpeedBase + Math.pow(tFrac, 1.6) * accelScale;
 
   // move aliens left/right and check bounds
   let shouldReverse = false;
@@ -205,6 +216,8 @@ function update(dt){
   });
   if(shouldReverse){
     alienDir *= -1;
+    // increment step counter and push aliens down
+    stepCount += 1;
     aliens.forEach(a=>{ if(a.alive) a.y += alienStepDown; });
   }
 
@@ -296,14 +309,25 @@ function gameOver(msg){
   try{ soundGameOver.currentTime = 0; soundGameOver.play().catch(()=>{}); }catch(e){}
   // if this is a new highscore, prompt for name
   const highList = loadHighList();
-  const best = highList[0] ? highList[0].score : 0;
-  if(score > best){
+  // qualifies if list has <10 entries or score is higher than the lowest in top list
+  const lowestTop = highList.length ? highList[highList.length-1].score : -1;
+  if(highList.length < 10 || score > lowestTop){
     showHighScoreForm(score);
   }
 }
 
 // input
-window.addEventListener('keydown', e=>{ keys[e.key] = true; if(e.key === ' '){ e.preventDefault(); fire(); } });
+window.addEventListener('keydown', e=>{
+  // toggle pause on Enter
+  if(e.key === 'Enter'){
+    paused = !paused;
+    const overlay = document.getElementById('pauseOverlay');
+    if(overlay) overlay.style.display = paused ? 'block' : 'none';
+    return;
+  }
+  keys[e.key] = true;
+  if(e.key === ' '){ e.preventDefault(); fire(); }
+});
 window.addEventListener('keyup', e=>{ keys[e.key] = false; });
 
 // start

@@ -69,6 +69,20 @@ Modified Files: main.js
 GitHub Commit Summary: Tie stronger speed-up to timer (revert -5s/level)
 
 2025-10-22  (jasmoone)
+Prompt: Make per-level speed increases stronger
+Reasoning: Increase the base alien speed per level and scale the timer-based acceleration with level so each higher level becomes noticeably faster as the countdown runs.
+Changed: Increased `alienSpeedBase` scaling and made the timer acceleration (`accelScale`) grow with `level` in `main.js`.
+Modified Files: main.js
+GitHub Commit Summary: Stronger per-level speed scaling and timer acceleration
+
+2025-10-22  (jasmoone)
+Prompt: Add pause and step-down speed increases
+Reasoning: Allow pausing with Enter and make the game more challenging by increasing alien speed each time they step down (rows decrement) in addition to timer-based acceleration.
+Changed: Added pause overlay and Enter-toggle. Introduced `stepCount` which increases when aliens step down and contributes to base speed and acceleration. Updated `main.js` accordingly.
+Modified Files: index.html, style.css, main.js
+GitHub Commit Summary: Pause on Enter + speed boost per alien step-down
+
+2025-10-22  (jasmoone)
 Prompt: Add High Score registration and Start New Game button
 Reasoning: Allow players to save their name when they beat the high score and provide a clear Start New Game button to restart without reloading the page.
 Changed: Updated `index.html` to include `Start New Game` button and a high-score input form. Updated `style.css` for layout. Updated `main.js` to persist a high-score list in localStorage and to show the form when a new high score is achieved.
