@@ -34,14 +34,26 @@ function initLevel(l){
   levelEl.textContent = level;
   bullets = [];
   aliens = [];
-  // rows = 2 + level (adds one row each level)
-  const rows = 2 + level;
+  // rows = 2 + level (adds one row each level) but cap so aliens don't reach the ship
+  const desiredRows = 2 + level;
   const cols = 8;
   const padding = 10;
   const alienW = 36;
   const alienH = 28;
   const startX = 40;
   const startY = 40;
+
+  // compute max rows that fit without overlapping the ship area
+  const availableHeight = ship.y - 80 - startY; // leave margin above ship
+  const rowHeight = alienH + padding;
+  const maxRowsFit = Math.max(1, Math.floor(availableHeight / rowHeight));
+  const rows = Math.min(desiredRows, maxRowsFit);
+  if(desiredRows > rows){
+    // notify player briefly
+    messageEl.textContent = `Level ${level}: limited rows to fit screen`;
+    setTimeout(()=>{ if(messageEl.textContent && messageEl.textContent.startsWith('Level')) messageEl.textContent = ''; }, 1200);
+  }
+
   for(let r=0;r<rows;r++){
     for(let c=0;c<cols;c++){
       aliens.push({

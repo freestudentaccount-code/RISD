@@ -11,3 +11,10 @@ Reasoning: Emoji were hard to see against the dark canvas; added a soft rounded 
 Changed: Updated `main.js` to render a rounded background behind each alive alien emoji, increase emoji font size, and add glow. Added `roundRect` helper.
 Modified Files: main.js
 GitHub Commit Summary: Improve emoji visibility (background + glow)
+ 
+2025-10-22  (jasmoone)
+Prompt: Prevent alien rows from overflowing to bottom
+Reasoning: On higher levels adding rows could push aliens too close to the ship; cap rows to the maximum that fits the canvas and show a brief message when rows are limited.
+Changed: Updated `main.js` to compute maximum rows that fit and cap rows added per level. Shows a short message if rows were limited.
+Modified Files: main.js
+GitHub Commit Summary: Cap alien rows so they fit on-screen
