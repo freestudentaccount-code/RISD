@@ -33,6 +33,7 @@ let transitioning = false; // fallback for older cached code paths (harmless)
 // load sounds (files added to repo)
 const soundPew = new Audio('pew.wav');
 const soundGameOver = new Audio('gameover.wav');
+const soundNextLevel = new Audio('nextlevel.wav');
 
 function initLevel(l){
   level = l || level;
@@ -186,6 +187,8 @@ function update(dt){
   if(aliens.every(a=>!a.alive)){
     if(!levelTimeout){
       messageEl.textContent = 'Level cleared!';
+      // play next level sound
+      try{ soundNextLevel.currentTime = 0; soundNextLevel.play().catch(()=>{}); }catch(e){}
       levelTimeout = setTimeout(()=>{
         messageEl.textContent = '';
         level = level + 1;

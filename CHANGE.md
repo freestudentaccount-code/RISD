@@ -48,6 +48,13 @@ Modified Files: main.js
 GitHub Commit Summary: Add sounds and time-up game over
 
 2025-10-22  (jasmoone)
+Prompt: Play nextlevel.wav on level clear
+Reasoning: Add audio feedback when player clears a level to celebrate progress.
+Changed: Added `nextlevel.wav` playback on level clear in `main.js`.
+Modified Files: main.js
+GitHub Commit Summary: Play next level sound on level clear
+
+2025-10-22  (jasmoone)
 Prompt: Add transitioning fallback variable
 Reasoning: Prevent potential ReferenceError from older cached scripts that still reference `transitioning`.
 Changed: Added `let transitioning = false;` as a harmless fallback in `main.js`.
