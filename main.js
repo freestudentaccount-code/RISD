@@ -34,6 +34,51 @@ let transitioning = false; // fallback for older cached code paths (harmless)
 const soundPew = new Audio('pew.wav');
 const soundGameOver = new Audio('gameover.wav');
 const soundNextLevel = new Audio('nextlevel.wav');
+// high score storage
+const HS_KEY = 'emoji-inv-highlist-v1';
+function loadHighList(){
+  try{ return JSON.parse(localStorage.getItem(HS_KEY) || '[]'); }catch(e){return []}
+}
+function saveHighList(list){ localStorage.setItem(HS_KEY, JSON.stringify(list.slice(0,10))); }
+function renderHighList(){
+  const el = document.getElementById('highList');
+  const list = loadHighList();
+  if(!el) return;
+  if(list.length===0){ el.innerHTML = '<small>No high scores yet</small>'; return; }
+  el.innerHTML = '<ol>' + list.map(i=>`<li>${i.name} — ${i.score}</li>`).join('') + '</ol>';
+}
+
+function showHighScoreForm(score){
+  const form = document.getElementById('highscoreForm');
+  const input = document.getElementById('playerName');
+  form.style.display = 'flex';
+  input.value = '';
+  input.focus();
+  form.dataset.score = score;
+}
+
+function hideHighScoreForm(){ document.getElementById('highscoreForm').style.display = 'none'; }
+
+// start/reset hooks
+const startBtn = document.getElementById('startBtn');
+startBtn.addEventListener('click', ()=>{
+  // reset game state and start at level 1
+  score = 0; scoreEl.textContent = score;
+  level = 1; initLevel(1); running = true; messageEl.textContent = '';
+});
+
+document.getElementById('saveName').addEventListener('click', ()=>{
+  const name = document.getElementById('playerName').value.trim() || 'Player';
+  const score = parseInt(document.getElementById('score').textContent || '0',10);
+  const list = loadHighList();
+  list.push({name, score});
+  list.sort((a,b)=>b.score - a.score);
+  saveHighList(list);
+  hideHighScoreForm(); renderHighList();
+});
+document.getElementById('skipSave').addEventListener('click', ()=>{ hideHighScoreForm(); });
+
+renderHighList();
 
 function initLevel(l){
   level = l || level;
@@ -247,6 +292,12 @@ function gameOver(msg){
   messageEl.textContent = msg + ' Final score: ' + score;
   // play game over sound
   try{ soundGameOver.currentTime = 0; soundGameOver.play().catch(()=>{}); }catch(e){}
+  // if this is a new highscore, prompt for name
+  const highList = loadHighList();
+  const best = highList[0] ? highList[0].score : 0;
+  if(score > best){
+    showHighScoreForm(score);
+  }
 }
 
 // input

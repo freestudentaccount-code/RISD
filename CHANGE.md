@@ -55,6 +55,13 @@ Modified Files: main.js
 GitHub Commit Summary: Play next level sound on level clear
 
 2025-10-22  (jasmoone)
+Prompt: Add High Score registration and Start New Game button
+Reasoning: Allow players to save their name when they beat the high score and provide a clear Start New Game button to restart without reloading the page.
+Changed: Updated `index.html` to include `Start New Game` button and a high-score input form. Updated `style.css` for layout. Updated `main.js` to persist a high-score list in localStorage and to show the form when a new high score is achieved.
+Modified Files: index.html, style.css, main.js
+GitHub Commit Summary: Add high-score registry and Start New Game button
+
+2025-10-22  (jasmoone)
 Prompt: Add transitioning fallback variable
 Reasoning: Prevent potential ReferenceError from older cached scripts that still reference `transitioning`.
 Changed: Added `let transitioning = false;` as a harmless fallback in `main.js`.

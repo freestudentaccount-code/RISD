@@ -10,6 +10,12 @@ h1{margin:0 0 8px}
 .hud{display:flex;justify-content:space-around;gap:12px;margin:8px 0 12px}
 canvas{display:block;margin:0 auto;background:linear-gradient(180deg,#001022 0%, #071a2b 100%);border:4px solid #0a2840;border-radius:8px}
 .controls{margin-top:10px;opacity:0.9}
+.controls-row{display:flex;justify-content:center;gap:12px;align-items:center;margin-top:10px}
+.btn{background:var(--accent);border:none;padding:8px 14px;border-radius:6px;color:#012;cursor:pointer;font-weight:700}
+.btn-ghost{background:transparent;color:var(--fg);border:1px solid rgba(255,255,255,0.06)}
+.highlist{min-width:220px;text-align:left;color:var(--accent)}
+.highscore-form{margin-top:12px;display:flex;gap:8px;justify-content:center;align-items:center}
+#playerName{padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.2);color:var(--fg)}
 .message{margin-top:10px;color:var(--accent);font-weight:700}
 
 /* small HUD on canvas for arrows */

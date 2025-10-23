@@ -16,7 +16,18 @@
         <div>Time: <span id="timer">0</span>s</div>
       </div>
       <canvas id="game" width="640" height="480"></canvas>
-      <div class="controls">Use ← → to move. Space to shoot. Reload page to restart.</div>
+      <div class="controls">Use ← → to move. Space to shoot.</div>
+      <div class="controls-row">
+        <button id="startBtn" class="btn">Start New Game</button>
+        <div id="highList" class="highlist" aria-live="polite"></div>
+      </div>
+
+      <div id="highscoreForm" class="highscore-form" style="display:none">
+        <label for="playerName">New High Score! Enter your name:</label>
+        <input id="playerName" type="text" maxlength="20" placeholder="Your name" />
+        <button id="saveName" class="btn">Save</button>
+        <button id="skipSave" class="btn btn-ghost">Skip</button>
+      </div>
       <div id="message" class="message"></div>
     </div>
     <script src="main.js"></script>
