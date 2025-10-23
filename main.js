@@ -117,7 +117,8 @@ function initLevel(l){
       });
     }
   }
-  levelTime = Math.max(6, baseLevelTime - (level-1)*2); // decrease time per level
+  // level time: mild per-level decrease (2s per level) to keep pacing familiar
+  levelTime = Math.max(6, baseLevelTime - (level-1)*2);
   levelStart = Date.now();
 }
 
@@ -191,8 +192,9 @@ function update(dt){
   const elapsed = (Date.now() - levelStart)/1000;
   const timeLeft = Math.max(0, levelTime - elapsed);
   const tFrac = 1 - timeLeft / levelTime; // 0..1
-  const alienSpeedBase = 20 + level*6;
-  const alienSpeed = alienSpeedBase + Math.pow(tFrac,1.5)*80; // speeds up near end
+  // make aliens speed up as the level timer counts down (stronger acceleration near end)
+  const alienSpeedBase = 22 + level*7; // slightly higher base than original and scales with level
+  const alienSpeed = alienSpeedBase + Math.pow(tFrac,1.6)*120; // additive acceleration based on remaining time
 
   // move aliens left/right and check bounds
   let shouldReverse = false;

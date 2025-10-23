@@ -55,6 +55,20 @@ Modified Files: main.js
 GitHub Commit Summary: Play next level sound on level clear
 
 2025-10-22  (jasmoone)
+Prompt: Increase difficulty per level
+Reasoning: Make the game more challenging by reducing level time faster and increasing alien speed scaling.
+Changed: Level time now decreases by 5 seconds per level (minimum 3s). Alien base speed and end-of-timer acceleration were increased in `main.js`.
+Modified Files: main.js
+GitHub Commit Summary: Reduce level time by 5s and increase alien speed scaling
+
+2025-10-22  (jasmoone)
+Prompt: Prefer stronger speed-up while timer counts down instead of large per-level time cuts
+Reasoning: To keep gameplay pacing consistent, reverted the aggressive -5s/level change and instead tuned alien base speed and timer-based acceleration so aliens speed up as the counter approaches zero.
+Changed: Restored milder per-level time decrease and increased the timer-based alien acceleration in `main.js`.
+Modified Files: main.js
+GitHub Commit Summary: Tie stronger speed-up to timer (revert -5s/level)
+
+2025-10-22  (jasmoone)
 Prompt: Add High Score registration and Start New Game button
 Reasoning: Allow players to save their name when they beat the high score and provide a clear Start New Game button to restart without reloading the page.
 Changed: Updated `index.html` to include `Start New Game` button and a high-score input form. Updated `style.css` for layout. Updated `main.js` to persist a high-score list in localStorage and to show the form when a new high score is achieved.
