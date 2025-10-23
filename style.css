@@ -1,0 +1,19 @@
+:root{
+  --bg:#071021;
+  --fg:#e8f0ff;
+  --accent:#2ee6a5;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+.container{max-width:800px;margin:20px auto;padding:12px;text-align:center}
+h1{margin:0 0 8px}
+.hud{display:flex;justify-content:space-around;gap:12px;margin:8px 0 12px}
+canvas{display:block;margin:0 auto;background:linear-gradient(180deg,#001022 0%, #071a2b 100%);border:4px solid #0a2840;border-radius:8px}
+.controls{margin-top:10px;opacity:0.9}
+.message{margin-top:10px;color:var(--accent);font-weight:700}
+
+/* small HUD on canvas for arrows */
+.hint{position:fixed;left:12px;bottom:12px;color:#99b}
+
+/* make text selectable disabled */
+body,canvas{user-select:none}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Emoji Invaders</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Emoji Invaders 👾</h1>
+      <div class="hud">
+        <div>Score: <span id="score">0</span></div>
+        <div>High: <span id="highscore">0</span></div>
+        <div>Level: <span id="level">1</span></div>
+        <div>Time: <span id="timer">0</span>s</div>
+      </div>
+      <canvas id="game" width="640" height="480"></canvas>
+      <div class="controls">Use ← → to move. Space to shoot. Reload page to restart.</div>
+      <div id="message" class="message"></div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
