@@ -18,3 +18,10 @@ Reasoning: On higher levels adding rows could push aliens too close to the ship;
 Changed: Updated `main.js` to compute maximum rows that fit and cap rows added per level. Shows a short message if rows were limited.
 Modified Files: main.js
 GitHub Commit Summary: Cap alien rows so they fit on-screen
+
+2025-10-22  (jasmoone)
+Prompt: Only add 1 row per level
+Reasoning: Make progression predictable by adding exactly one row per level instead of multiple rows.
+Changed: Updated `main.js` row calculation to use baseRows + (level-1).
+Modified Files: main.js
+GitHub Commit Summary: Levels now add exactly one alien row each

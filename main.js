@@ -34,8 +34,9 @@ function initLevel(l){
   levelEl.textContent = level;
   bullets = [];
   aliens = [];
-  // rows = 2 + level (adds one row each level) but cap so aliens don't reach the ship
-  const desiredRows = 2 + level;
+  // rows = baseRows + (level-1) -> only one extra row per level
+  const baseRows = 2;
+  const desiredRows = baseRows + (level - 1);
   const cols = 8;
   const padding = 10;
   const alienW = 36;
