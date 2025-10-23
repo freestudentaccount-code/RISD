@@ -41,6 +41,13 @@ Modified Files: main.js
 GitHub Commit Summary: Fix level transition hang using levelTimeout guard
 
 2025-10-22  (jasmoone)
+Prompt: Add sounds and enforce game over when timer hits zero
+Reasoning: Make shooting and game over more satisfying and ensure the level ends when time reaches zero.
+Changed: Added `pew.wav` playback on shoot and `gameover.wav` on game over; enforced game over when timer reaches 0 and aliens remain.
+Modified Files: main.js
+GitHub Commit Summary: Add sounds and time-up game over
+
+2025-10-22  (jasmoone)
 Prompt: Add transitioning fallback variable
 Reasoning: Prevent potential ReferenceError from older cached scripts that still reference `transitioning`.
 Changed: Added `let transitioning = false;` as a harmless fallback in `main.js`.

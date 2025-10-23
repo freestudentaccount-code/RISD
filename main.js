@@ -30,6 +30,9 @@ let alienDir = 1; // 1 right, -1 left
 let alienStepDown = 18;
 let levelTimeout = null; // guard for scheduled level transition
 let transitioning = false; // fallback for older cached code paths (harmless)
+// load sounds (files added to repo)
+const soundPew = new Audio('pew.wav');
+const soundGameOver = new Audio('gameover.wav');
 
 function initLevel(l){
   level = l || level;
@@ -192,8 +195,15 @@ function update(dt){
     }
   }
 
-  // time up -> increase alien downward push (speed already increases) and if still time up and aliens not cleared, they move faster; if time=0 and still aliens, let them continue; when they reach bottom game over handled above
+  // time up -> if reaches zero and aliens still alive, game over
   timerEl.textContent = Math.ceil(timeLeft);
+  if(timeLeft <= 0){
+    // if any aliens alive -> game over
+    if(aliens.some(a=>a.alive)){
+      gameOver('Time up. Game Over!');
+      return;
+    }
+  }
 }
 
 function render(){
@@ -225,11 +235,15 @@ function loop(){
 function fire(){
   if(!running) return;
   bullets.push({ x: ship.x, y: ship.y - 14, speed: 420, hit:false });
+  // play pew sound (non-blocking)
+  try{ soundPew.currentTime = 0; soundPew.play().catch(()=>{}); }catch(e){}
 }
 
 function gameOver(msg){
   running = false;
   messageEl.textContent = msg + ' Final score: ' + score;
+  // play game over sound
+  try{ soundGameOver.currentTime = 0; soundGameOver.play().catch(()=>{}); }catch(e){}
 }
 
 // input
