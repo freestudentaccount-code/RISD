@@ -28,6 +28,8 @@ let levelStart = Date.now();
 
 let alienDir = 1; // 1 right, -1 left
 let alienStepDown = 18;
+let levelTimeout = null; // guard for scheduled level transition
+let transitioning = false; // fallback for older cached code paths (harmless)
 
 function initLevel(l){
   level = l || level;
@@ -179,8 +181,15 @@ function update(dt){
 
   // level complete
   if(aliens.every(a=>!a.alive)){
-    messageEl.textContent = 'Level cleared!';
-    setTimeout(()=>{ messageEl.textContent = ''; initLevel(level+1); }, 900);
+    if(!levelTimeout){
+      messageEl.textContent = 'Level cleared!';
+      levelTimeout = setTimeout(()=>{
+        messageEl.textContent = '';
+        level = level + 1;
+        initLevel(level);
+        levelTimeout = null;
+      }, 900);
+    }
   }
 
   // time up -> increase alien downward push (speed already increases) and if still time up and aliens not cleared, they move faster; if time=0 and still aliens, let them continue; when they reach bottom game over handled above

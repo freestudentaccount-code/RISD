@@ -25,3 +25,24 @@ Reasoning: Make progression predictable by adding exactly one row per level inst
 Changed: Updated `main.js` row calculation to use baseRows + (level-1).
 Modified Files: main.js
 GitHub Commit Summary: Levels now add exactly one alien row each
+
+2025-10-22  (jasmoone)
+Prompt: Fix level jump (skipping many levels)
+Reasoning: Multiple scheduled level transitions could be queued when all aliens die within a short time window, causing level to jump. Added a transitioning guard to ensure only a single level advance is scheduled.
+Changed: Updated `main.js` to use a `transitioning` flag and prevent multiple scheduled initLevel calls.
+Modified Files: main.js
+GitHub Commit Summary: Prevent multiple level transitions (fix level jump)
+
+2025-10-22  (jasmoone)
+Prompt: Fix hanging after last alien (level transition not happening reliably)
+Reasoning: Replaced the previous transitioning flag with a dedicated `levelTimeout` guard and explicitly increment the `level` before calling `initLevel(level)` so progression is sequential and won't hang.
+Changed: Updated `main.js` to use `levelTimeout` and increment `level` when transitioning to the next level.
+Modified Files: main.js
+GitHub Commit Summary: Fix level transition hang using levelTimeout guard
+
+2025-10-22  (jasmoone)
+Prompt: Add transitioning fallback variable
+Reasoning: Prevent potential ReferenceError from older cached scripts that still reference `transitioning`.
+Changed: Added `let transitioning = false;` as a harmless fallback in `main.js`.
+Modified Files: main.js
+GitHub Commit Summary: Add transitioning fallback
